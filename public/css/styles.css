@@ -1,6 +1,255 @@
-/******* Change Box Model ***************/
+/*******************************
+        Table of Contents
+*******************************/
+
+/*******************************
+    1.  General Styles (colors, fonts, etc.)
+*******************************/
+  /* 1.1 font import */
+  /* 1.2 box model */
+  /* 1.3 typography */
+  /* 1.4 colors */
+
+/*******************************
+    2.  Navigation
+*******************************/
+  /* 2.1 nav */
+  /* 2.2 nav ul */
+  /* 2.3 nav li */
+  /* 2.4 nav links */
+
+/*******************************
+      3. Layout (flexbox, position, etc.)
+*******************************/
+  /* 3.1 wrapper (body div) */
+  /* 3.2 main */
+  /* 3.3 header */
+  /* 3.4 footer */
+
+  /* 3.5 flexbox */
+  /* 3.6 grid */
+
+/*******************************
+      4. Components (buttons, cards, etc.)
+*******************************/
+
+/*******************************
+      5. Responsive Design (media queries)
+*******************************/
+/* 5.1 mobile */
+/* 5.2 tablet */
+/* 5.3 desktop */
+
+/*******************************
+      6. Page Specific
+*******************************/
+/* 6.1 home */
+/* 6.1.1 upgrade cards */
+
+/*******************************
+        End of Table of Contents
+*******************************/
+
+/* 1.1 font import */
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap');
+
+/* 1.2 box model */
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+/* 1.3 typography */
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+main {
+  text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  margin: 0;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  margin: 0;
+}
+
+#upgrade-cards-wrapper {
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* 1.4 colors */
+:root {
+  --primary: #74121d;
+  --secondary: #a7333f;
+  --dark: black;
+  --light: #fff;
+}
+
+/********************************
+        2. Navigation 
+*********************************/
+
+/* 2.1 nav */
+nav {
+  background-color: var(--primary);
+  margin: 1%;
+}
+
+/* 2.2 nav ul */
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+}
+
+/* 2.3 nav li */
+nav li {
+  display: block;
+  color: var(--light);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav li:hover {
+  background-color: var(--secondary);
+}
+
+/********************************
+        3. Layout
+*********************************/
+
+/* 3.1 wrapper (body div) */
+#wrapper{
+  max-width: 600px;
+  margin: 2% auto;
+  width: 100%;
+}
+
+/* 3.2 main */
+main{
+  padding: .5em;
+}
+
+/* 3.3 header */
+#top-header{
+  display: flex;
+  justify-content: space-between;
+  padding: .5rem 0;
+  margin: 1%;
+}
+
+#top-header h1{
+  margin: 0;
+}
+
+#top-header a{
+  color: var(--dark);
+  text-decoration: none;
+}
+
+#top-header a:hover{
+  color: var(--secondary);
+}
+
+/* 3.4 footer */
+footer{
+  background-color: var(--primary);
+  color: var(--light);
+  padding: .5rem;
+  text-align: left;
+}
+
+/* 3.5 flexbox */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#layout-car-card{
+  display: flex;
+  position: relative;
+}
+
+img{
+  width: 100%;
+  display: inline-block;
+}
+
+/* 3.6 grid */
+#upgrade-cards{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+}
+
+/* 6.1 home */
+#layout-car-card div{
+  background-color: rgba(255, 255, 255, 0.5);
+  color: var(--secondary);
+  width: 100%;
+}
+
+#ownCard{
+  min-width: 115px;
+  padding: .5rem;
+  max-height: 265px;
+  margin: .5rem;
+}
+
+/* 6.1.1 upgrade cards */
+.upgrade-pic-background {
+  position: relative;
+  width: 200px;
+  height: 125px;
+  background-color: var(--secondary);
+  overflow: hidden;
+  text-align: center;
+  margin: .5rem;
+}
+
+.upgrade-pic-background img {
+  width: 50%;
+  height: auto;
+  margin: .5rem;
+}
+
+#reviews li{
+  padding: .25rem;
 }
