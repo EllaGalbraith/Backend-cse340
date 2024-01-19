@@ -27,11 +27,14 @@
   /* 3.4 footer */
 
   /* 3.5 flexbox */
+  /* 3.5.1 car hero */
   /* 3.6 grid */
 
 /*******************************
       4. Components (buttons, cards, etc.)
 *******************************/
+/* 4.1 buttons */
+/* 4.2 cards */
 
 /*******************************
       5. Responsive Design (media queries)
@@ -202,14 +205,23 @@ footer{
   flex-wrap: wrap;
 }
 
+/* 3.5.1 car hero */
 #layout-car-card{
-  display: flex;
   position: relative;
+  width: 100%;
+  height: auto;
 }
 
-img{
+#car-hero{
   width: 100%;
-  display: inline-block;
+  height: auto;
+}
+
+#own-card{
+  position: absolute;
+  max-width: 175px;
+  max-height: 300px;
+  top: 0px;
 }
 
 /* 3.6 grid */
@@ -219,6 +231,44 @@ img{
   width: 100%;
 }
 
+/********************************
+        4. Components
+*********************************/
+/* 4.1 buttons */
+button{
+  background-color: var(--secondary);
+  border: none;
+  color: var(--light);
+  padding: .5rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin: .5rem;
+  cursor: pointer;
+}
+
+button:hover{
+  background-color: var(--primary);
+}
+
+#index-own-button{
+  margin: .5rem 0;
+}
+
+/* 4.2 cards */
+.card {
+  border: 1px solid black;
+}
+
+/********************************
+        5. Responsive Design
+*********************************/
+
+
+/********************************
+        6. Page Specific
+*********************************/
 /* 6.1 home */
 #layout-car-card div{
   background-color: rgba(255, 255, 255, 0.5);
@@ -226,10 +276,8 @@ img{
   width: 100%;
 }
 
-#ownCard{
-  min-width: 115px;
+#own-card{
   padding: .5rem;
-  max-height: 265px;
   margin: .5rem;
 }
 
