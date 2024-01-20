@@ -342,7 +342,7 @@ button:hover{
     margin: 0;
   }
 
-  #own-card h4{
+  #own-card h3{
     font-size: 1.25rem;
     font-weight: bold;
 
@@ -395,7 +395,7 @@ button:hover{
     margin: 1.5rem;
   }
 
-  #own-card h4{
+  #own-card h3{
     font-size: 1.5rem;
     font-weight: bold;
   }
