@@ -359,7 +359,7 @@ button:hover{
 
 
 /* 6.3 desktop */
-@media (min-width: 900px) {
+@media (min-width: 570px) {
   body {
     width: 100%;
     background-image: url(/images/site/small_check.jpg);
