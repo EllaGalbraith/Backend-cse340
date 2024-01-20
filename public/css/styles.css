@@ -130,6 +130,23 @@ p {
   --light: #fff;
 }
 
+.indavidual-cards a{
+  color: var(--dark);
+  text-decoration: none;
+}
+
+.indavidual-cards a:hover{
+  color: var(--secondary);
+}
+
+body {
+  background-color: var(--light);
+}
+
+#wrapper{
+  background-color: var(--light);
+}
+
 /********************************
         2. Navigation 
 *********************************/
@@ -334,6 +351,84 @@ button:hover{
   .upgrade-pic-background{
     max-width: 150px;
     max-height: 100px;
+  }
+
+}
+
+/* 6.2 tablet */
+
+
+/* 6.3 desktop */
+@media (min-width: 900px) {
+  body {
+    width: 100%;
+    background-image: url(/images/site/small_check.jpg);
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  #wrapper{
+    max-width: 900px;
+    border: var(--primary) solid 5px;
+    border-radius: 10px;
+  }
+
+  h2 {
+    margin: 1rem;
+  }
+
+  #car-hero{
+    max-width: 75%;
+    height: auto;
+  }
+
+  #upgrade-cards{
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #own-card{
+    max-width: 175px;
+    max-height: 300px;
+    margin: 1.5rem;
+  }
+
+  #own-card h4{
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .upgrade-pic-background{
+    max-width: 200px;
+    max-height: 125px;
+  }
+
+  #reviews li{
+    padding: .5rem;
+  }
+
+  #upgrade-cards-wrapper {
+    order: 1;
+    width: 50%;
+  }
+
+  .indavidual-cards{
+    text-align: left;
+  }
+
+  .indavidual-cards a{
+    margin: .5rem;
+  }
+
+  #reviews-wrapper{
+    order: 2;
+    margin-left: 1rem;
+  }
+
+  #reviews-wrapper h2 {
+    margin-left: 0px;
   }
 
 }
