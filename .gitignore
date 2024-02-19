@@ -12,9 +12,15 @@ node_modules
 # will be manually created by you or dynamically # created on the hosting server
 .env
 
+# debugging config file
+.vscode
+.vscode/*
+
 # .DS_Store is only for Mac users
-**/.DS_Store
+# **/.DS_Store
 
 README.md
 sandbox
+sandbox/*
 web-backend-practice
+web-backend-practice/*

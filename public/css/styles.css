@@ -43,6 +43,9 @@
 /* 5.1 home */
 /* 5.1.1 upgrade cards */
 
+/* 5.2 inventory */
+/* 5.3 car detail */
+
 /*******************************
       6. Responsive Design (media queries)
 *******************************/
@@ -122,6 +125,10 @@ p {
   padding-left: 1rem;
 }
 
+#car-card{
+  text-align: center;
+}
+
 /* 1.4 colors */
 :root {
   --primary: #74121d;
@@ -176,6 +183,12 @@ nav li {
   text-decoration: none;
 }
 
+nav a{
+  color: var(--light);
+  text-decoration: none;
+
+}
+
 nav li:hover {
   background-color: var(--secondary);
 }
@@ -225,6 +238,16 @@ footer{
   text-align: left;
 }
 
+footer a{
+  color: var(--light);
+  text-decoration: none;
+  padding: .25rem;
+}
+
+footer a:hover{
+  background-color: var(--secondary);
+}
+
 /* 3.5 flexbox */
 .flex-container {
   display: flex;
@@ -256,6 +279,8 @@ footer{
   grid-template-columns: 1fr 1fr;
   width: 100%;
 }
+
+
 
 /********************************
         4. Components
@@ -323,6 +348,88 @@ button:hover{
   padding: .25rem;
 }
 
+#custom-view-h2{
+  margin: auto;
+  text-align: center;
+}
+
+/* 5.2 inventory */
+.car-cards{
+  border: black solid 2px;
+  padding: .5rem;
+  padding-top: 0%;
+  max-width: 250px;
+  margin: 12px 0;
+  background-color: var(--secondary);
+}
+
+.car-cards h3{
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.car-cards a{
+  color: var(--light);
+  text-decoration: none;
+  padding: .05rem;
+}
+
+.car-cards a:hover{
+  background-color: var(--primary);
+}
+
+.car-cards span {
+  color: var(--light);
+}
+
+.car-cards img{
+  border: black solid 2px;
+  display: block;
+  margin: 0 auto;
+}
+
+#inv-display{
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 0;
+}
+
+/* 5.3 car detail */
+
+#description-grid{
+  margin: 0 auto;
+}
+
+#description-grid p{
+  padding: 1rem;
+}
+
+#specifics-top img{
+  padding-right: 1rem;
+}
+
+.description-ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+#make-h3{
+  padding: .5rem;
+  background-color: var(--secondary);
+  color: var(--light);
+}
+
+#description-h4{
+  padding: .5rem;
+  background-color: var(--secondary);
+  color: var(--light);
+  margin: 0 1rem;
+}
+
 /********************************
         6. Responsive Design
 *********************************/
@@ -334,6 +441,10 @@ button:hover{
 
   nav{
     margin: 0;
+  }
+
+  nav li{
+    padding: 5px 12px;
   }
 
   #own-card{
@@ -353,6 +464,22 @@ button:hover{
     max-height: 100px;
   }
 
+  #specifics-container{
+    grid-template-columns: 1fr;
+  }
+
+  #specifics-container img{
+    max-width: 100%;
+    padding: 0%;
+  }
+
+  #description-h4{
+    margin: 0%;
+  }
+
+  #description-grid p{
+    padding: .05rem;
+  }
 }
 
 /* 6.2 tablet */
@@ -430,5 +557,18 @@ button:hover{
   #reviews-wrapper h2 {
     margin-left: 0px;
   }
+
+  #specifics-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1.5fr .5fr;
+    width: 100%;
+  }
+  
+  #description-grid{
+    grid-column: 1 / 3;
+    grid-row: 2 / 2;
+  }
+
 
 }
