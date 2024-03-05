@@ -90,6 +90,25 @@ Util.buildSpecificVehicle = function(data){
   return card
 }
 
+Util.buildClassificationFormInput = async function () {
+  try {
+      let formInput = '<select name="classification_id">';
+      const data = await invModel.getClassificationFormInput();
+      data.forEach(classification => {
+          formInput += `<option value="${classification.classification_id}">${classification.classification_name}</option>`;
+      });
+      formInput += '</select>';
+      console.log(formInput);
+      return Promise.resolve(formInput); // Explicitly wrap in a Promise
+  } catch (error) {
+      console.error("getClassificationFormInput error " + error);
+      return Promise.reject(error);
+  }
+};
+
+
+
+
   /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

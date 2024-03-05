@@ -1,0 +1,52 @@
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
+<% if (title) { %>
+    <h2 id="custom-view-h2"><%= title %></h2>
+    
+    <% } else {
+      res.redirect('/')
+    } 
+  %>
+
+<%- messages() %>
+
+<form action="/inv/add/inventory" method="post">
+  <% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+  <label for="inv_make">Make:</label>
+  <input type="text" name="inv_make" id="inv_make" value="<%= locals.inv_make %>" required >
+  <label for="inv_model">Model:</label>
+  <input type="text" name="inv_model" id="inv_model" value="<%= locals.inv_model %>" required >
+  <label for="inv_year">Year:</label>
+  <input type="text" name="inv_year" id="inv_year" value="<%= locals.inv_year %>" required >
+  <p>The year must be a 4 digit number!</p>
+  <label for="inv_description">Description:</label>
+  <input type="text" name="inv_description" id="inv_description" value="<%= locals.inv_description %>" required >
+  <label for="inv_image">Image:</label>
+  <input type="text" name="inv_image" id="inv_image" value="/images/no-image.png" required >
+  <label for="inv_thumbnail">Thumbnail:</label>
+  <input type="text" name="inv_thumbnail" id="inv_thumbnail" value="/images/no-image-tn.png" required >
+  <label for="inv_price">Price:</label>
+  <input type="text" name="inv_price" id="inv_price" value="<%= locals.inv_price %>" required >
+  <label for="inv_miles">Miles:</label>
+  <input type="text" name="inv_miles" id="inv_miles" value="<%= locals.inv_miles %>" required >
+  <label for="inv_color">Color:</label>
+  <input type="text" name="inv_color" id="inv_color" value="<%= locals.inv_color %>" required >
+  <label for="classification_id">Classification:</label>
+  <div>
+    <%- dropDown %>
+  </div>
+  
+  <button type="submit">Submit</button>
+</form>

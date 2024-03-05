@@ -36,6 +36,7 @@
 *******************************/
 /* 4.1 buttons */
 /* 4.2 cards */
+/* 4.3 forms */
 
 /*******************************
       5. Page Specific
@@ -312,6 +313,39 @@ button:hover{
   border: 1px solid black;
 }
 
+/* 4.3 forms */
+input:required:invalid, input:focus:invalid {
+  /* insert your own styles for invalid form input */
+  background-color: rgb(231, 110, 110);
+ }
+
+form{
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: var(--primary);
+  color: var(--light);
+}
+
+form button{
+  border: 2px solid var(--light);
+}
+
+form p{
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+select {
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
 /********************************
         5. Page Specific
 *********************************/

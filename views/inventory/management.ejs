@@ -1,0 +1,21 @@
+<% if (title) { %>
+  <h2 id="custom-view-h2"><%= title %></h2>
+  
+  <a href="/inv/add/classification">Add New Classification</a>
+  |
+  <a href="/inv/add/inventory">Add New Inventory</a>
+
+  <% } else {
+    res.redirect('/')
+  } 
+%>
+
+<%# messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
