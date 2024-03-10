@@ -195,6 +195,10 @@ nav li:hover {
   background-color: var(--secondary);
 }
 
+.my-links{
+  max-width: 100%;
+}
+
 /********************************
         3. Layout
 *********************************/
@@ -488,6 +492,18 @@ select {
 *********************************/
 /* 6.1 mobile */
 @media (max-width: 600px) {
+  .my-links{
+    display: none;
+  }
+
+  body{
+    max-width: 100%;
+  }
+
+  header{
+    max-width: 350px;
+  }
+
   #wrapper{
     margin: 0;
   }
@@ -540,6 +556,14 @@ select {
 
 /* 6.3 desktop */
 @media (min-width: 570px) {
+  .hamburger-menu{
+    display: none;
+  }
+  
+  .my-links{
+    display: flex;
+  }
+
   body {
     width: 100%;
     background-image: url(/images/site/small_check.jpg);

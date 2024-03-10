@@ -1,19 +1,18 @@
 <% if (title) { %>
   <h2 id="custom-view-h2"><%= title %></h2>
-  
-  <div class="inv-management">
-    <a href="/inv/add/classification">Add New Classification</a>
-    |
-    <a href="/inv/add/inventory">Add New Inventory</a>
-  </div>
-  
 
   <% } else {
     res.redirect('/')
   } 
 %>
 
-<%# messages() %>
+<%- messages() %>
+
+<div class="inv-management">
+  <a href="/inv/add/classification">Add New Classification</a>
+  |
+  <a href="/inv/add/inventory">Add New Inventory</a>
+</div>
 
 <% if (errors) { %>
     <ul class="notice">

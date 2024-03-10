@@ -65,14 +65,15 @@ invCont.buildAddInventory = async function (req, res, next) {
 *  Process Form Data
 * *************************************** */
 invCont.addClassification = async function (req, res, next) {
-  let nav = await utilities.getNav()
   const { classification_name } = req.body
 
   const classificationResult = await invModel.addClassification(classification_name)
 
+  let nav = await utilities.getNav()
+
   if (classificationResult) {
     req.flash("notice", `Classification ${classification_name} added.`)
-    res.status(201).render("./inventory/add-classification", {
+    res.status(201).render("./inventory/management", {
       title: "Add Classification",
       nav,
       errors: null,
@@ -107,7 +108,7 @@ invCont.addInventory = async function (req, res, next) {
 
   if (inventoryResult) {
     req.flash("notice", `Inventory ${inv_make} ${inv_model} added.`)
-    res.status(201).render("./inventory/add-inventory", {
+    res.status(201).render("./inventory/management", {
       title: "Add Inventory",
       nav,
       errors: null,

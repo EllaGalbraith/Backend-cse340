@@ -4,13 +4,34 @@ const Util = {}
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
+// Util.getNav = async function (req, res, next) {
+//   let data = await invModel.getClassifications()
+//   console.log(data)
+//   let list = "<ul class='my-links'>"
+//   list += '<li><a href="/" title="Home page">Home</a></li>'
+//   data.rows.forEach((row) => {
+//     list += "<li>"
+//     list +=
+//       '<a href="/inv/type/' +
+//       row.classification_id +
+//       '" title="See our inventory of ' +
+//       row.classification_name +
+//       ' vehicles">' +
+//       row.classification_name +
+//       "</a>"
+//     list += "</li>"
+//   })
+//   list += "</ul>"
+//   return list
+// }
 Util.getNav = async function (req, res, next) {
-  let data = await invModel.getClassifications()
-  console.log(data)
-  let list = "<ul>"
-  list += '<li><a href="/" title="Home page">Home</a></li>'
+  let data = await invModel.getClassifications();
+  console.log(data);
+  let list =  '<a class="hamburger-menu" onclick="toggleMenu()" href="#">&#9776;</a>';
+  list += "<ul class='my-links'>";
+  list += '<li><a href="/" title="Home page">Home</a></li>';
   data.rows.forEach((row) => {
-    list += "<li>"
+    list += "<li>";
     list +=
       '<a href="/inv/type/' +
       row.classification_id +
@@ -18,12 +39,16 @@ Util.getNav = async function (req, res, next) {
       row.classification_name +
       ' vehicles">' +
       row.classification_name +
-      "</a>"
-    list += "</li>"
-  })
-  list += "</ul>"
-  return list
-}
+      "</a>";
+    list += "</li>";
+  });
+  list += "</ul>";
+  // Adding the script for the toggleMenu function
+  list +=
+  '<script> function toggleMenu() { var x = document.querySelector(".my-links"); var icon = document.querySelector(".hamburger-menu"); if (x.style.display === "block") { x.style.display = "none"; icon.innerHTML = "&#9776;"; } else { x.style.display = "block"; icon.innerHTML = "&#10006;"; } } </script>';
+return list;
+};
+
 
 /* **************************************
 * Build the classification view HTML
@@ -90,12 +115,38 @@ Util.buildSpecificVehicle = function(data){
   return card
 }
 
-Util.buildClassificationFormInput = async function () {
+// Util.buildClassificationFormInput = async function () {
+//   try {
+//       let formInput = '<select name="classification_id" required>';
+//       const data = await invModel.getClassificationFormInput();
+//       data.forEach(classification => {
+//           formInput += `<option value="${classification.classification_id}">${classification.classification_name}</option>`;
+
+//       });
+//       formInput += '</select>';
+//       console.log(formInput);
+//       return Promise.resolve(formInput); // Explicitly wrap in a Promise
+//   } catch (error) {
+//       console.error("getClassificationFormInput error " + error);
+//       return Promise.reject(error);
+//   }
+// };
+
+Util.buildClassificationFormInput = async function (classification_id = null) {
   try {
-      let formInput = '<select name="classification_id">';
+      let formInput = '<select name="classification_id" required>';
       const data = await invModel.getClassificationFormInput();
-      data.forEach(classification => {
-          formInput += `<option value="${classification.classification_id}">${classification.classification_name}</option>`;
+      formInput += '<option value="">Select a Classification</option>';
+      data.forEach(row => {
+          formInput += `<option value="${row.classification_id}"`
+          if (
+            classification_id != null &&
+            classification_id == row.classification_id
+          ){
+            formInput += ' selected ';
+          }
+          formInput += `>${row.classification_name}</option>`
+
       });
       formInput += '</select>';
       console.log(formInput);

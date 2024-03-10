@@ -32,11 +32,11 @@
   <input type="text" name="inv_year" id="inv_year" value="<%= locals.inv_year %>" required >
   <p>The year must be a 4 digit number!</p>
   <label for="inv_description">Description:</label>
-  <input type="text" name="inv_description" id="inv_description" value="<%= locals.inv_description %>" required >
+  <textarea name="inv_description" id="inv_description" value="<%= locals.inv_description %>" required ></textarea>
   <label for="inv_image">Image:</label>
-  <input type="text" name="inv_image" id="inv_image" value="/images/no-image.png" required >
+  <input type="text" name="inv_image" id="inv_image" value="/images/vehicles/no-image.png" required >
   <label for="inv_thumbnail">Thumbnail:</label>
-  <input type="text" name="inv_thumbnail" id="inv_thumbnail" value="/images/no-image-tn.png" required >
+  <input type="text" name="inv_thumbnail" id="inv_thumbnail" value="/images/vehicles/no-image-tn.png" required >
   <label for="inv_price">Price:</label>
   <input type="text" name="inv_price" id="inv_price" value="<%= locals.inv_price %>" required >
   <label for="inv_miles">Miles:</label>

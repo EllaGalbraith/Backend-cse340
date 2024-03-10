@@ -41,7 +41,7 @@ validate.addInventoryRules = () => {
         body("inv_year")
         .trim()
         .isNumeric()
-        .isLength({ min: 4 })
+        .isLength({ min: 4, max: 4 })
         .withMessage("Please provide an inventory year."), // on error this message is sent.
 
         // inventory_description is required and must be string
@@ -89,7 +89,7 @@ validate.addInventoryRules = () => {
         // classification_id is required and must be number
         body("classification_id")
         .trim()
-        .isNumeric()
+        .isInt()
         .isLength({ min: 1 })
         .withMessage("Please provide a classification id."), // on error this message is sent.
     ]
@@ -117,7 +117,7 @@ validate.checkInventoryData = async (req, res, next) => {
     let errors = []
     errors = validationResult(req)
     console.log("Errors:", errors)
-    let dropDown = await utilities.buildClassificationFormInput()
+    let dropDown = await utilities.buildClassificationFormInput(classification_id)
     console.log(dropDown)
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav()  
