@@ -8,6 +8,8 @@ validate.addClassificationRules = () => {
       body("classification_name")
         .trim()
         .isString()
+        .escape()
+        .notEmpty()
         .isLength({ min: 1 })
         .withMessage("Please provide a classification name.")
         .custom(value => {
@@ -25,6 +27,8 @@ validate.addInventoryRules = () => {
         // inv_make is required and must be string
         body("inv_make")
         .trim()
+        .escape()
+        .notEmpty()
         .isString()
         .isLength({ min: 1 })
         .withMessage("Please provide an inventory make."), // on error this message is sent.
@@ -33,6 +37,8 @@ validate.addInventoryRules = () => {
         // inventory_model is required and must be string
         body("inv_model")
         .trim()
+        .escape()
+        .notEmpty()
         .isString()
         .isLength({ min: 1 })
         .withMessage("Please provide an inventory model."), // on error this message is sent.
@@ -40,6 +46,8 @@ validate.addInventoryRules = () => {
         // inv_year is required and must be number
         body("inv_year")
         .trim()
+        .escape()
+        .notEmpty()
         .isNumeric()
         .isLength({ min: 4, max: 4 })
         .withMessage("Please provide an inventory year."), // on error this message is sent.
@@ -47,6 +55,8 @@ validate.addInventoryRules = () => {
         // inventory_description is required and must be string
         body("inv_description")
         .trim()
+        .escape()
+        .notEmpty()
         .isString()
         .isLength({ min: 1 })
         .withMessage("Please provide an inventory description."), // on error this message is sent.
@@ -54,6 +64,8 @@ validate.addInventoryRules = () => {
         // inv_image is required and must be string
         body("inv_image")
         .trim()
+        .escape()
+        .notEmpty()
         .isString()
         .isLength({ min: 1 })
         .withMessage("Please provide an inventory image."), // on error this message is sent.
@@ -61,6 +73,8 @@ validate.addInventoryRules = () => {
         // inv_thumbnail is required and must be string
         body("inv_thumbnail")
         .trim()
+        .escape()
+        .notEmpty()
         .isString()
         .isLength({ min: 1 })
         .withMessage("Please provide an inventory thumbnail."), // on error this message is sent.
@@ -68,6 +82,8 @@ validate.addInventoryRules = () => {
         // inv_price is required and must be number
         body("inv_price")
         .trim()
+        .escape()
+        .notEmpty()
         .isNumeric()
         .isLength({ min: 1 })
         .withMessage("Please provide an inventory price."), // on error this message is sent.
@@ -75,6 +91,8 @@ validate.addInventoryRules = () => {
         // inv_miles is required and must be number
         body("inv_miles")
         .trim()
+        .escape()
+        .notEmpty()
         .isNumeric()
         .isLength({ min: 1 })
         .withMessage("Please provide an inventory miles."), // on error this message is sent.
@@ -82,6 +100,8 @@ validate.addInventoryRules = () => {
         // inv_color is required and must be string
         body("inv_color")
         .trim()
+        .escape()
+        .notEmpty()
         .isString()
         .isLength({ min: 1 })
         .withMessage("Please provide an inventory color."), // on error this message is sent.
@@ -89,6 +109,7 @@ validate.addInventoryRules = () => {
         // classification_id is required and must be number
         body("classification_id")
         .trim()
+        .notEmpty()
         .isInt()
         .isLength({ min: 1 })
         .withMessage("Please provide a classification id."), // on error this message is sent.
@@ -140,6 +161,37 @@ validate.checkInventoryData = async (req, res, next) => {
         return
       }
       next()
+}
+
+validate.checkUpdateData = async (req, res, next) => {
+  const {inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id} = req.body
+  let errors = []
+  errors = validationResult(req)
+  console.log("Errors:", errors)
+  let dropDown = await utilities.buildClassificationFormInput(classification_id)
+  console.log(dropDown)
+  if (!errors.isEmpty()) {
+      let nav = await utilities.getNav()  
+      res.render("inventory/edit-inventory", {
+        errors,
+        title: "Edit " + inv_make + " " + inv_model,
+        dropDown,
+        nav,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color,
+        classification_id,
+        inv_id
+      })
+      return
+    }
+    next()
 }
 
 module.exports = validate

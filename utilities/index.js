@@ -1,5 +1,7 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -134,7 +136,7 @@ Util.buildSpecificVehicle = function(data){
 
 Util.buildClassificationFormInput = async function (classification_id = null) {
   try {
-      let formInput = '<select name="classification_id" required>';
+      let formInput = '<select id="classificationList" name="classification_id" required>';
       const data = await invModel.getClassificationFormInput();
       formInput += '<option value="">Select a Classification</option>';
       data.forEach(row => {
@@ -166,5 +168,60 @@ Util.buildClassificationFormInput = async function (classification_id = null) {
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+  if (req.cookies.jwt) {
+   jwt.verify(
+    req.cookies.jwt,
+    process.env.ACCESS_TOKEN_SECRET,
+    function (err, accountData) {
+     if (err) {
+      req.flash("Please log in")
+      res.clearCookie("jwt")
+      return res.redirect("/account/login")
+     }
+     res.locals.accountData = accountData
+     console.log(accountData)
+     res.locals.loggedin = 1
+     next()
+    })
+  } else {
+   next()
+  }
+ }
+
+ /* ****************************************
+ *  Check Login
+ * ************************************ */
+ Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+ }
+
+ Util.checkAccountType = (req, res, next) => {
+  if (res.locals.accountData.account_type === "Admin") {
+    next()
+  } else if (res.locals.accountData.account_type === "Employee") {
+    next()
+  } else {
+    req.flash("notice", "You do not have permission to access this page.")
+    return res.redirect("/")
+  }
+ }
+
+ // logout
+ Util.logout = (req, res, next) => { 
+  res.clearCookie("jwt")
+  res.locals.loggedin = 0
+  req.flash("notice", "You have been logged out. Hope to see you again soon!")
+  return res.redirect("/")
+  }
 
 module.exports = Util

@@ -47,6 +47,7 @@
 /* 5.2 inventory */
 /* 5.3 car detail */
 /* 5.4 inv management */
+/* 5.5 account management */
 
 /*******************************
       6. Responsive Design (media queries)
@@ -112,6 +113,10 @@ h6 {
 
 p {
   margin: 0;
+}
+
+.bold{
+  font-weight: bold;
 }
 
 /* 1.3.1 alignment */
@@ -327,6 +332,7 @@ input:required:invalid, input:focus:invalid {
 form{
   max-width: 500px;
   margin: 0 auto;
+  margin-bottom: .5rem;
   padding: 1rem;
   background-color: var(--primary);
   color: var(--light);
@@ -353,6 +359,16 @@ select {
   margin-bottom: 16px;
   box-sizing: border-box;
 }
+
+form a{
+  color: var(--light);
+}
+
+form a:hover{
+  background-color: var(--secondary); 
+  padding: .25rem;
+}
+
 /********************************
         5. Page Specific
 *********************************/
@@ -484,6 +500,20 @@ select {
 }
 
 .inv-management a:hover{
+  color: var(--secondary);
+}
+
+/* 5.5 account management */
+.not-centered{
+  text-align: left;
+  margin: 0;
+}
+
+.account-management a{
+  color: var(--dark);
+}
+
+.account-management a:hover{
   color: var(--secondary);
 }
 

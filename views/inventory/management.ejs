@@ -13,6 +13,13 @@
   |
   <a href="/inv/add/inventory">Add New Inventory</a>
 </div>
+<h2>Manage Inventory</h2>
+<p>Select a classification from this list to see the items in the classification!</p>
+<%- dropDown %>
+
+<table id="inventoryDisplay"></table>
+
+<noscript>JavaScript must be enabled to use this page.</noscript>
 
 <% if (errors) { %>
     <ul class="notice">
@@ -21,3 +28,5 @@
   <%  }) %>
    </ul>
   <% } %>
+
+<script src="../../js/inventory.js"></script>

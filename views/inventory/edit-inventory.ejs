@@ -16,7 +16,7 @@
 
 <%- messages() %>
 
-<form action="/inv/add/inventory" method="post">
+<form id="updateForm" action="/inv/update" method="post">
   <% if (errors) { %>
     <ul class="notice">
    <% errors.array().forEach(error => { %>
@@ -48,5 +48,12 @@
     <%- dropDown %>
   </div>
   
-  <button type="submit">Submit</button>
+  <button type="submit" disabled>Update Vehicle</button>
+
+  <input type="hidden" name="inv_id"
+
+<% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+<% } %>>
 </form>
+
+<script src="../../js/inv-update.js"></script>

@@ -1,0 +1,1 @@
+SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_email = 'nut@gmail.com';
