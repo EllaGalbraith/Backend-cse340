@@ -9,6 +9,7 @@ const invCont = {}
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId
   const data = await invModel.getInventoryByClassificationId(classification_id)
+  console.log('Yo Testing: ',data[0])
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
   const className = data[0].classification_name
@@ -60,6 +61,25 @@ invCont.buildAddInventory = async function (req, res, next) {
     nav,
     dropDown,
     errors: null,
+  })
+}
+
+invCont.buildApproveInventory = async function (req, res, next) {
+  let nav = await utilities.getNav()
+
+  // classification that needs approval
+  let needApprovalClassifications = await invModel.getClassificationNeedApproval()
+  let approvalClassifications = await utilities.buildApprovalClassification(needApprovalClassifications)
+  // inventory that needs approval
+  let needApprovalInv = await invModel.getInventoryNeedApproval()
+  let approvalInv = await utilities.buildApprovalInventory(needApprovalInv)
+
+  res.render("./inventory/approve-inventory", {
+    title: "Approve Inventory",
+    nav,
+    errors: null,
+    approvalInv,
+    approvalClassifications,
   })
 }
 
@@ -226,6 +246,40 @@ invCont.buildUpdateInventory = async function (req, res, next) {
     inv_color: data.inv_color,
     classification_id: data.classification_id,
   })
+}
+
+// accept classifications
+invCont.approveClassification = async function (req, res, next) {
+  const classification_id = parseInt(req.params.classification_id.split(":")[1])
+  const user_id = parseInt(res.locals.accountData.account_id)
+  console.log("user_id: ", user_id)
+  console.log("classification_id: ", classification_id)
+  const approvalResult = await invModel.approveClassification(user_id, classification_id)
+  console.log("approvalResult: ", approvalResult)
+  if (approvalResult) {
+    req.flash("notice", `Classification: ${approvalResult.classification_name} approved.`)
+    res.redirect("/inv/approval")
+  } else {
+    req.flash("notice", "Sorry, the approval failed.")
+    res.status(501).redirect("/inv/approval")
+  }
+}
+
+// accept inventory
+invCont.approveInventory = async function (req, res, next) {
+  const inv_id = parseInt(req.params.inv_id.split(":")[1])
+  const user_id = parseInt(res.locals.accountData.account_id)
+  console.log("user_id: ", user_id)
+  console.log("inv_id: ", inv_id)
+  const approvalResult = await invModel.approveInventory(user_id, inv_id)
+  console.log("approvalResult: ", approvalResult)
+  if (approvalResult) {
+    req.flash("notice", `Inventory: ${approvalResult.inv_make} ${approvalResult.inv_model} approved.`)
+    res.redirect("/inv/approval")
+  } else {
+    req.flash("notice", "Sorry, the approval failed.")
+    res.status(501).redirect("/inv/approval")
+  }
 }
 
 /* ***************************

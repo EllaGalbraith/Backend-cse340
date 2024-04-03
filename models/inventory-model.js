@@ -3,8 +3,17 @@ const pool = require("../database/")
 /* ***************************
  *  Get all classification data
  * ************************** */
-async function getClassifications(){
+// classifications that are approved show up for the drop down in the forms, not the nav bar though... unless we want 
+
+async function getALLClassifications(){
   return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
+}
+
+// check if the classification is approved and check if there is at least one inventory item in the classification
+// SELECT * FROM public.classification WHERE classification_approved = true AND classification_id IN (SELECT classification_id FROM public.inventory)
+
+async function getClassifications(){
+  return await pool.query("SELECT * FROM public.classification WHERE classification_approved = true AND classification_id IN (SELECT classification_id FROM public.inventory WHERE inv_approved = true) ORDER BY classification_name")
 }
 
 /* ***************************
@@ -14,11 +23,12 @@ async function getInventoryByClassificationId(classification_id) {
   try {
     const data = await pool.query(
       `SELECT * FROM public.inventory AS i 
-      JOIN public.classification AS c 
+      INNER JOIN public.classification AS c 
       ON i.classification_id = c.classification_id 
-      WHERE i.classification_id = $1`,
+      WHERE i.classification_id = $1 AND i.inv_approved = true`,
       [classification_id]
     )
+    console.log("testing data.rows: ", data.rows)
     return data.rows
   } catch (error) {
     console.error("getclassificationsbyid error " + error)
@@ -40,12 +50,73 @@ async function getInventoryById(inv_id) {
   }
 }
 
+// approve classification
+async function approveClassification(user_id, classification_id) {
+  try {
+    console.log("checking in the model:  ", classification_id, " ", user_id)
+    const data = await pool.query(
+      `UPDATE public.classification SET account_id = $1, classification_approved = true WHERE classification_id = $2 RETURNING *;`,
+      [user_id, classification_id]
+    )
+    console.log("approveClassification data: ", data)
+    return data.rows[0]
+  } catch (error) {
+    console.error("approveInventory error " + error)
+  }
+}
+
+// approve Inventory
+async function approveInventory(user_id, inv_id) {
+  try {
+    const data = await pool.query(
+      `UPDATE public.inventory SET account_id = $1, inv_approved = true WHERE inv_id = $2 RETURNING *;`,
+      [user_id, inv_id]
+    )
+    return data.rows[0]
+  } catch (error) {
+    console.error("approveInventory error " + error)
+  }
+}
+
 async function getClassificationFormInput() {
   try {
-    const data = await pool.query("SELECT * FROM public.classification")
+    const data = await pool.query("SELECT * FROM public.classification WHERE classification_approved = true ORDER BY classification_name")
     return data.rows
   } catch (error) {
     console.error("getClassificationFormInput error " + error)
+  }
+}
+
+// get inventory that needs approval and the classification name for the inventory
+async function getInventoryNeedApproval(){
+  try {
+    const data = await pool.query(
+      // `SELECT * FROM public.inventory AS i 
+      // JOIN public.classification AS c 
+      // ON i.classification_id = c.classification_id 
+      // WHERE i.inv_approved = false`
+      `SELECT i.*, c.classification_name
+      FROM public.inventory AS i 
+      JOIN public.classification AS c 
+      ON i.classification_id = c.classification_id 
+      WHERE i.inv_approved = false`
+    )
+    // console.log('YUH', data.rows[0])
+    return data.rows
+  } catch (error) {
+    console.error("getInventoryNeedApproval error " + error)
+  }
+}
+
+async function getClassificationNeedApproval() {
+  try {
+    const data = await pool.query(
+      `SELECT * FROM public.classification 
+      WHERE classification_approved = false`
+    )
+    return data.rows
+  } catch (error) {
+    console.error("getClassificationNeedApproval error " + error)
   }
 }
 
@@ -123,4 +194,4 @@ async function deleteInventory(inv_id) {
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById, getClassificationFormInput, addClassification, addInventory, updateInventory, deleteInventory}
+module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById, getClassificationFormInput, addClassification, addInventory, updateInventory, deleteInventory, getALLClassifications, getInventoryNeedApproval, getClassificationNeedApproval, approveClassification, approveInventory}

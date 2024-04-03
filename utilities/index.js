@@ -6,26 +6,6 @@ require("dotenv").config()
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
-// Util.getNav = async function (req, res, next) {
-//   let data = await invModel.getClassifications()
-//   console.log(data)
-//   let list = "<ul class='my-links'>"
-//   list += '<li><a href="/" title="Home page">Home</a></li>'
-//   data.rows.forEach((row) => {
-//     list += "<li>"
-//     list +=
-//       '<a href="/inv/type/' +
-//       row.classification_id +
-//       '" title="See our inventory of ' +
-//       row.classification_name +
-//       ' vehicles">' +
-//       row.classification_name +
-//       "</a>"
-//     list += "</li>"
-//   })
-//   list += "</ul>"
-//   return list
-// }
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications();
   console.log(data);
@@ -50,6 +30,56 @@ Util.getNav = async function (req, res, next) {
   '<script> function toggleMenu() { var x = document.querySelector(".my-links"); var icon = document.querySelector(".hamburger-menu"); if (x.style.display === "block") { x.style.display = "none"; icon.innerHTML = "&#9776;"; } else { x.style.display = "block"; icon.innerHTML = "&#10006;"; } } </script>';
 return list;
 };
+
+// build the approvals view pieces
+// approval inventory
+Util.buildApprovalInventory = async function(invData){
+  let grid = '<h4>Unapproved Inventory Items</h4>'
+  grid += '<table>'; // Start of table
+  grid += '<thead>'
+  grid += '<tr><th>Vehicle Name:</th><th>Classification:</th><th><td>&nbsp;</td></th></tr>'
+  grid += '</thead>'
+
+  grid += '<tbody>' // Start of table body
+  // put each vehicle in a row with its classification name
+  if(invData.length > 0){
+    invData.forEach(vehicle => {
+      grid += '<tr><td>' + vehicle.inv_make + ' ' + vehicle.inv_model + '</td>'
+      grid += `<td>` + vehicle.classification_name + `</td>`
+      grid +=  `<td><a href='/inv/approved/:${vehicle.inv_id}' title="Click to approve">Approve</a></td></tr>`
+    })
+  } else { 
+    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  grid += '</tbody>' // End of table body
+  grid += '</table>' // End of table
+  return grid
+}
+
+// approval classification
+Util.buildApprovalClassification = async function(classData){
+  let grid = '<h4>Unapproved Classification Items</h4>'
+  grid += '<table>'; // Start of table
+  grid += '<thead>'
+  grid += '<tr><th>Classification Name:</th><th><td>&nbsp;</td></th></tr>'
+  grid += '</thead>'
+  grid += '<tbody>' // Start of table body
+  // put each classification name in a row with its 
+  if(classData.length > 0){
+    classData.forEach(classification => {
+      grid += '<form class="approval-forms" action="/inv/approved" method="post">'
+      grid += '<tr><td>' + classification.classification_name + '</td>'
+      grid += `<td><a href='/inv/class/approved/:${classification.classification_id}' title="Click to approve">Approve</a></td></tr>`
+      grid += '</form>'
+    })
+  } else { 
+    grid += '<p class="notice">Sorry, no matching classifications could be found.</p>'
+  }
+  grid += '</tbody>' // End of table body
+  grid += '</table>' // End of table
+  return grid
+}
+
 
 
 /* **************************************
@@ -138,6 +168,7 @@ Util.buildClassificationFormInput = async function (classification_id = null) {
   try {
       let formInput = '<select id="classificationList" name="classification_id" required>';
       const data = await invModel.getClassificationFormInput();
+      console.log("testing the data in util", data)
       formInput += '<option value="">Select a Classification</option>';
       data.forEach(row => {
           formInput += `<option value="${row.classification_id}"`
@@ -209,7 +240,12 @@ Util.checkJWTToken = (req, res, next) => {
   if (res.locals.accountData.account_type === "Admin") {
     next()
   } else if (res.locals.accountData.account_type === "Employee") {
-    next()
+    if (req.url === "/inv/approval") {
+      req.flash("notice", "You do not have permission to access this page.")
+      return res.redirect("/")
+    } else {
+      next()
+    }
   } else {
     req.flash("notice", "You do not have permission to access this page.")
     return res.redirect("/")

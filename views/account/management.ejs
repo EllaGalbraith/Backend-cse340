@@ -12,11 +12,18 @@
     <% if (locals.accountData.account_type === 'Client') { %>
       <h3>Welcome <%- locals.accountData.account_firstname %> </h3>
       <p><a href="/account/edit">Edit your account</a></p>
-    <% } else if (locals.accountData.account_type == 'Employee' || locals.accountData.account_type == 'Admin'){ %>
+    <% } else if (locals.accountData.account_type == 'Employee'){ %>
       <h3>Welcome <%- locals.accountData.account_firstname %> </h3>
       <p><a href="/account/edit">Edit your account</a></p>
       <h4>Inventory Management</h4>
       <p><a href="/inv/">Go to Inventory Management</a></p>
+    <% } else if (locals.accountData.account_type == 'Admin') { %>
+      <h3>Welcome <%- locals.accountData.account_firstname %> </h3>
+      <p><a href="/account/edit">Edit your account</a></p>
+      <h4>Inventory Management</h4>
+      <p><a href="/inv/">Go to Inventory Management</a></p>
+      <h4>Approval Management</h4>
+      <p><a href="/inv/approval">Go to Approval Management</a></p>
     <% } %>
   </div>
   
